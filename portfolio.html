@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aditya Gaurav — Digital Media Buyer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --meta-blue: #1877F2;
+    --meta-blue-dim: #0d4fa3;
+    --search-gold: #FBBC04;
+    --search-gold-dim: #c49300;
+    --bg: #09090E;
+    --bg-card: #0f1117;
+    --bg-card2: #13151d;
+    --border: rgba(255,255,255,0.07);
+    --border-gold: rgba(251,188,4,0.25);
+    --border-blue: rgba(24,119,242,0.25);
+    --text: #e8eaf0;
+    --text-muted: #6b7280;
+    --text-dim: #3d4452;
+    --mono: 'Space Mono', monospace;
+    --sans: 'DM Sans', sans-serif;
+    --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* GRAIN OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: var(--grain);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.6;
+  }
+
+  /* SCANLINE */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 3px,
+      rgba(0,0,0,0.08) 3px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(9,9,14,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--search-gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--meta-blue); }
+
+  /* STATUS BADGE */
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #34d399;
+    letter-spacing: 0.08em;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #34d399;
+    animation: pulse-dot 2s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(24,119,242,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(24,119,242,0.04) 1px, transparent 1px);
+    background-size: 80px 80px;
+    pointer-events: none;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: 20%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(24,119,242,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-glow-gold {
+    position: absolute;
+    bottom: 10%;
+    right: -5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(251,188,4,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--meta-blue);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fade-up 0.8s 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: var(--mono);
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fade-up 0.8s 0.4s forwards;
+  }
+
+  .hero-name span {
+    color: var(--meta-blue);
+  }
+
+  .hero-tagline {
+    font-family: var(--mono);
+    font-size: clamp(0.85rem, 1.5vw, 1.1rem);
+    color: var(--search-gold);
+    margin-bottom: 2.5rem;
+    min-height: 2em;
+    opacity: 0;
+    animation: fade-up 0.8s 0.6s forwards;
+  }
+
+  .cursor-blink {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--search-gold);
+    margin-left: 4px;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .hero-sub {
+    max-width: 560px;
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fade-up 0.8s 0.8s forwards;
+  }
+
+  .hero-sub em {
+    color: var(--text);
+    font-style: normal;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    opacity: 0;
+    animation: fade-up 0.8s 1s forwards;
+  }
+
+  .btn-primary {
+    padding: 0.75rem 2rem;
+    background: var(--meta-blue);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-primary:hover { background: var(--meta-blue-dim); transform: translateY(-2px); }
+
+  .btn-secondary {
+    padding: 0.75rem 2rem;
+    background: transparent;
+    color: var(--search-gold);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--border-gold);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-secondary:hover { background: rgba(251,188,4,0.06); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 3rem;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-scroll::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--text-dim);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 3rem;
+    position: relative;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--meta-blue);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--meta-blue);
+  }
+
+  .section-title {
+    font-family: var(--mono);
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
+
+  .section-quip {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--search-gold);
+    letter-spacing: 0.05em;
+    margin-bottom: 3.5rem;
+    opacity: 0.7;
+  }
+
+  /* EXPERIENCE */
+  .exp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .exp-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--meta-blue);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s;
+  }
+
+  .exp-card:hover { border-color: var(--border-blue); transform: translateY(-4px); }
+  .exp-card:hover::before { transform: scaleX(1); }
+
+  .exp-card.gold::before { background: var(--search-gold); }
+  .exp-card.gold:hover { border-color: var(--border-gold); }
+
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+
+  .exp-role {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.25rem;
+    font-family: var(--mono);
+  }
+
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--meta-blue);
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+  }
+
+  .exp-card.gold .exp-period { color: var(--search-gold); }
+
+  .exp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .tag-blue {
+    background: rgba(24,119,242,0.12);
+    color: #60a5fa;
+    border: 1px solid rgba(24,119,242,0.2);
+  }
+
+  .tag-gold {
+    background: rgba(251,188,4,0.10);
+    color: #fbbf24;
+    border: 1px solid rgba(251,188,4,0.2);
+  }
+
+  .tag-green {
+    background: rgba(52,211,153,0.10);
+    color: #6ee7b7;
+    border: 1px solid rgba(52,211,153,0.2);
+  }
+
+  .exp-description {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .exp-tooltip {
+    display: inline-block;
+    position: relative;
+    margin-top: 1rem;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    cursor: help;
+    border-bottom: 1px dashed var(--text-dim);
+  }
+
+  .exp-tooltip:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: 120%;
+    left: 0;
+    background: #1a1d27;
+    color: var(--search-gold);
+    padding: 6px 12px;
+    font-size: 10px;
+    white-space: nowrap;
+    border: 1px solid var(--border-gold);
+    pointer-events: none;
+    z-index: 10;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1rem;
+  }
+
+  .skill-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    text-align: center;
+    cursor: default;
+    transition: border-color 0.3s, transform 0.2s, background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(24,119,242,0.06) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .skill-card:hover {
+    border-color: var(--border-blue);
+    transform: translateY(-3px) scale(1.02);
+    background: var(--bg-card2);
+  }
+
+  .skill-card:hover::after { opacity: 1; }
+
+  .skill-card.gold-hover:hover { border-color: var(--border-gold); }
+  .skill-card.gold-hover::after {
+    background: radial-gradient(circle at center, rgba(251,188,4,0.06) 0%, transparent 70%);
+  }
+
+  .skill-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .skill-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .skill-level {
+    display: block;
+    margin-top: 0.5rem;
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .skill-level-bar {
+    height: 100%;
+    background: var(--meta-blue);
+    border-radius: 1px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1s cubic-bezier(.22,.61,.36,1);
+  }
+
+  .skill-card.gold-hover .skill-level-bar { background: var(--search-gold); }
+  .skill-card.revealed .skill-level-bar { transform: scaleX(1); }
+
+  /* METRICS */
+  #metrics {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .metrics-grid { grid-template-columns: 1fr; }
+  }
+
+  .metric-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    position: relative;
+  }
+
+  .metric-number {
+    font-family: var(--mono);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    color: var(--meta-blue);
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .metric-number.gold { color: var(--search-gold); }
+
+  .metric-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .metric-quip {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    font-style: italic;
+  }
+
+  /* CHART CARD */
+  .chart-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    grid-column: 1 / -1;
+    position: relative;
+  }
+
+  .chart-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .chart-label strong { color: #34d399; }
+
+  .chart-svg {
+    width: 100%;
+    height: 120px;
+  }
+
+  .chart-annotation {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--search-gold);
+    text-align: right;
+  }
+
+  .chart-annotation strong {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #34d399;
+  }
+
+  /* CONTACT */
+  #contact {
+    border-top: 1px solid var(--border);
+  }
+
+  .contact-bar {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 1.2rem 1.8rem;
+    text-decoration: none;
+    color: var(--text-muted);
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    position: relative;
+    group: true;
+  }
+
+  .contact-item:hover {
+    color: var(--text);
+    transform: translateY(-3px);
+  }
+
+  .contact-item.blue:hover { border-color: var(--border-blue); }
+  .contact-item.gold:hover { border-color: var(--border-gold); color: var(--search-gold); }
+  .contact-item.green:hover { border-color: rgba(52,211,153,0.3); color: #34d399; }
+
+  .contact-icon {
+    font-size: 1.2rem;
+  }
+
+  .contact-text {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  .contact-text span {
+    display: block;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-quip {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.05em;
+    font-style: italic;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s, transform 0.7s;
+  }
+
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* DIVIDER */
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* CURSOR CUSTOM */
+  a, button { cursor: crosshair; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    #hero { padding: 0 1.5rem; }
+    footer { padding: 2rem 1.5rem; }
+    .hero-scroll { left: 1.5rem; }
+    .contact-bar { flex-direction: column; }
+    .metrics-grid { grid-template-columns: 1fr; }
+  }
+
+  /* COUNTER */
+  .counter-wrap { display: inline-block; }
+
+  /* MARQUEE BAR */
+  .marquee-bar {
+    background: var(--meta-blue);
+    padding: 0.6rem 0;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .marquee-track {
+    display: inline-block;
+    animation: marquee 25s linear infinite;
+  }
+
+  .marquee-track span {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #fff;
+    padding: 0 2.5rem;
+    opacity: 0.9;
+  }
+
+  .marquee-track span::before {
+    content: '✦ ';
+    color: var(--search-gold);
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AG_portfolio.exe</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#metrics">Metrics</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="status-badge">
+    <div class="status-dot"></div>
+    Available for Projects
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-gold"></div>
+
+  <div class="hero-eyebrow">Digital Media Buyer &amp; Marketing Specialist</div>
+
+  <h1 class="hero-name">Aditya<br><span>Gaurav</span></h1>
+
+  <div class="hero-tagline" id="tagline-text">
+    <span id="rotating-text"></span><span class="cursor-blink"></span>
+  </div>
+
+  <p class="hero-sub">
+    I turn ad budgets into <em>results</em> — not just reports full of vanity metrics your client will pretend to understand.
+    <br>Specializing in Search Arbitrage, Content Arbitrage, and Meta Ads at scale.
+  </p>
+
+  <div class="hero-cta">
+    <a href="#metrics" class="btn-primary">See the Numbers</a>
+    <a href="#contact" class="btn-secondary">Let's Talk</a>
+  </div>
+
+  <div class="hero-scroll">scroll to proceed</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-track" id="marquee">
+    <span>Meta Ads</span><span>Search Arbitrage</span><span>Content Arbitrage</span><span>ROAS Optimization</span><span>Pixel Setup</span><span>Google Ads</span><span>SEO</span><span>Shopify</span><span>WordPress</span><span>ZioPix Media</span><span>Arrah News</span><span>40%+ Engagement</span>
+    <span>Meta Ads</span><span>Search Arbitrage</span><span>Content Arbitrage</span><span>ROAS Optimization</span><span>Pixel Setup</span><span>Google Ads</span><span>SEO</span><span>Shopify</span><span>WordPress</span><span>ZioPix Media</span><span>Arrah News</span><span>40%+ Engagement</span>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Experience</div>
+  <h2 class="section-title">Where I've Operated</h2>
+  <p class="section-quip">// yes, real companies. yes, real results.</p>
+
+  <div class="exp-grid">
+    <div class="exp-card reveal">
+      <div class="exp-company">ZioPix Media</div>
+      <div class="exp-role">Digital Media Buyer</div>
+      <div class="exp-period">RECENT · ACTIVE</div>
+      <div class="exp-tags">
+        <span class="tag tag-blue">Search Arbitrage</span>
+        <span class="tag tag-gold">Content Arbitrage</span>
+        <span class="tag tag-blue">Meta Ads</span>
+      </div>
+      <p class="exp-description">
+        Managed large-scale paid media campaigns, optimized ad spend across search and content arbitrage pipelines, and kept ROAS at levels that made the finance team momentarily pleasant.
+      </p>
+      <span class="exp-tooltip" data-tip="No, arbitrage isn't illegal.">hover for legal disclaimer ↗</span>
+    </div>
+
+    <div class="exp-card gold reveal">
+      <div class="exp-company">Arrah News</div>
+      <div class="exp-role">Marketing Specialist</div>
+      <div class="exp-period">MEDIA · PUBLISHING</div>
+      <div class="exp-tags">
+        <span class="tag tag-gold">Content Strategy</span>
+        <span class="tag tag-green">Audience Growth</span>
+        <span class="tag tag-blue">Meta Ads</span>
+      </div>
+      <p class="exp-description">
+        Drove post reach and engagement growth of <strong style="color:#34d399;">40%+</strong> through targeted content amplification and paid social. Turned a regional news outlet into a traffic machine.
+      </p>
+      <span class="exp-tooltip" data-tip="No bots were harmed in this engagement growth.">hover for authenticity disclaimer ↗</span>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Technical Arsenal</div>
+  <h2 class="section-title">What I Actually Know</h2>
+  <p class="section-quip">// unlike most LinkedIn "experts", these are real skills</p>
+
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <span class="skill-icon">📘</span>
+      <div class="skill-name">Meta Ads</div>
+      <span class="skill-level"><span class="skill-level-bar" style="width:95%"></span></span>
+    </div>
+    <div class="skill-card gold-hover reveal">
+      <span class="skill-icon">🔍</span>
+      <div class="skill-name">Google Ads</div>
+      <span class="skill-level"><span class="skill-level-bar" style="width:90%"></span></span>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">⚡</span>
+      <div class="skill-name">Pixel Setup</div>
+      <span class="skill-level"><span class="skill-level-bar" style="width:88%"></span></span>
+    </div>
+    <div class="skill-card gold-hover reveal">
+      <span class="skill-icon">📈</span>
+      <div class="skill-name">Search Arbitrage</div>
+      <span class="skill-level"><span class="skill-level-bar" style="width:92%"></span></span>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">📰</span>
+      <div class="skill-name">Content Arbitrage</div>
+      <span class="skill-level"><span class="skill-level-bar" style="width:90%"></span></span>
+    </div>
+    <div class="skill-card gold-hover reveal">
+      <span class="skill-icon">🔎</span>
+      <div class="skill-name">SEO</div>
+      <span class="skill-level"><span class="skill-level-bar" style="width:80%"></span></span>
+    </div>
+    <div class="skill-card reveal">
+      <span class="skill-icon">🛒</span>
+      <div class="skill-name">Shopify</div>
+      <span class="skill-level"><span class="skill-level-bar" style="width:78%"></span></span>
+    </div>
+    <div class="skill-card gold-hover reveal">
+      <span class="skill-icon">🌐</span>
+      <div class="skill-name">WordPress</div>
+      <span class="skill-level"><span class="skill-level-bar" style="width:82%"></span></span>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section id="metrics">
+  <div class="section-label">Results</div>
+  <h2 class="section-title">Numbers Don't Lie</h2>
+  <p class="section-quip">// unlike your last agency's case study</p>
+
+  <div class="metrics-grid">
+    <div class="metric-card reveal">
+      <span class="metric-number" data-target="40" data-suffix="%+">0%</span>
+      <div class="metric-label">Post Reach &amp; Engagement Increase — Arrah News</div>
+      <div class="metric-quip">// and no, it wasn't a one-week spike</div>
+    </div>
+    <div class="metric-card reveal">
+      <span class="metric-number gold" data-target="3" data-suffix="x+">0x</span>
+      <div class="metric-label">Average ROAS Improvement on Managed Campaigns</div>
+      <div class="metric-quip">// the client was suspicious. then grateful.</div>
+    </div>
+
+    <div class="chart-card reveal">
+      <div class="chart-annotation">
+        Engagement Growth<strong>+40%</strong>
+      </div>
+      <div class="chart-label">Traffic &amp; Reach — <strong>Upward. Always.</strong></div>
+
+      <svg class="chart-svg" viewBox="0 0 800 120" preserveAspectRatio="none" id="chart-svg">
+        <defs>
+          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1877F2" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#1877F2" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <!-- Grid lines -->
+        <line x1="0" y1="30" x2="800" y2="30" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="0" y1="60" x2="800" y2="60" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <line x1="0" y1="90" x2="800" y2="90" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+        <!-- Area fill -->
+        <path id="chart-area" d="" fill="url(#chartGrad)" opacity="0.7"/>
+        <!-- Line -->
+        <path id="chart-line" d="" fill="none" stroke="#1877F2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Gold dot at peak -->
+        <circle id="chart-dot" cx="0" cy="0" r="5" fill="#FBBC04"/>
+      </svg>
+
+      <!-- Month labels -->
+      <div style="display:flex; justify-content:space-between; margin-top: 0.75rem;">
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text-dim);letter-spacing:0.1em;">JAN</span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text-dim);letter-spacing:0.1em;">MAR</span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text-dim);letter-spacing:0.1em;">MAY</span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text-dim);letter-spacing:0.1em;">JUL</span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text-dim);letter-spacing:0.1em;">SEP</span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--text-dim);letter-spacing:0.1em;">NOW</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Contact</div>
+  <h2 class="section-title">Find Me. I'll Reply.</h2>
+  <p class="section-quip">// faster than your current agency, guaranteed</p>
+
+  <div class="contact-bar reveal">
+    <a href="tel:+911234567890" class="contact-item gold">
+      <span class="contact-icon">📞</span>
+      <div class="contact-text">
+        <span>Phone</span>
+        +91 XXXXX XXXXX
+      </div>
+    </a>
+    <a href="mailto:aditya@example.com" class="contact-item blue">
+      <span class="contact-icon">✉</span>
+      <div class="contact-text">
+        <span>Email</span>
+        aditya@example.com
+      </div>
+    </a>
+    <a href="https://linkedin.com/in/adityagaurav" target="_blank" class="contact-item green">
+      <span class="contact-icon">in</span>
+      <div class="contact-text">
+        <span>LinkedIn</span>
+        /in/adityagaurav
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-copy">© 2025 Aditya Gaurav. All rights reserved. No stock photos were used in this portfolio.</div>
+  <div class="footer-quip">// built with actual skill, not a template builder</div>
+</footer>
+
+<script>
+  // ROTATING TAGLINES
+  const taglines = [
+    "Optimizing Ad Spend & Driving Large-Scale Traffic",
+    "Making Your Competitors Question Their Life Choices",
+    "Yes, That ROAS Is Real. No, I Won't Tell You How.",
+    "Turning Budgets Into Results Since Before It Was a Buzzword",
+    "Your Agency Charges More. I Deliver More.",
+  ];
+  let tagIdx = 0;
+  let charIdx = 0;
+  let deleting = false;
+  const el = document.getElementById('rotating-text');
+
+  function typewriter() {
+    const current = taglines[tagIdx];
+    if (!deleting) {
+      el.textContent = current.slice(0, charIdx + 1);
+      charIdx++;
+      if (charIdx === current.length) {
+        deleting = true;
+        setTimeout(typewriter, 2400);
+        return;
+      }
+    } else {
+      el.textContent = current.slice(0, charIdx - 1);
+      charIdx--;
+      if (charIdx === 0) {
+        deleting = false;
+        tagIdx = (tagIdx + 1) % taglines.length;
+      }
+    }
+    setTimeout(typewriter, deleting ? 35 : 55);
+  }
+  typewriter();
+
+  // CHART
+  const pts = [110, 100, 98, 90, 82, 70, 60, 50, 40, 28, 16, 10];
+  const w = 800, h = 120;
+  function buildPath() {
+    const xs = pts.map((_, i) => (i / (pts.length - 1)) * w);
+    const ys = pts;
+    let d = `M ${xs[0]} ${ys[0]}`;
+    for (let i = 1; i < pts.length; i++) {
+      const cpx = (xs[i - 1] + xs[i]) / 2;
+      d += ` C ${cpx} ${ys[i-1]}, ${cpx} ${ys[i]}, ${xs[i]} ${ys[i]}`;
+    }
+    return { d, lastX: xs[xs.length-1], lastY: ys[ys.length-1] };
+  }
+  const { d, lastX, lastY } = buildPath();
+  document.getElementById('chart-line').setAttribute('d', d);
+  document.getElementById('chart-area').setAttribute('d', d + ` L ${lastX} ${h} L 0 ${h} Z`);
+  document.getElementById('chart-dot').setAttribute('cx', lastX);
+  document.getElementById('chart-dot').setAttribute('cy', lastY);
+
+  // INTERSECTION OBSERVER (reveal + counters + skill bars)
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        // Counter
+        const num = entry.target.querySelector('[data-target]');
+        if (num && !num.dataset.counted) {
+          num.dataset.counted = '1';
+          const target = +num.dataset.target;
+          const suffix = num.dataset.suffix || '';
+          let current = 0;
+          const step = Math.ceil(target / 40);
+          const interval = setInterval(() => {
+            current = Math.min(current + step, target);
+            num.textContent = current + suffix;
+            if (current >= target) clearInterval(interval);
+          }, 40);
+        }
+        // Skill bars
+        entry.target.querySelectorAll('.skill-level-bar').forEach(bar => {
+          bar.style.width = bar.style.width || '80%';
+          const parent = bar.closest('.skill-card');
+          if (parent) parent.classList.add('revealed');
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  // Also observe metric-card directly for counter
+  document.querySelectorAll('.metric-card').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
